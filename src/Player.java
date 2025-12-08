@@ -1,6 +1,6 @@
 
 /**
- A class represent a chat room user.
+ A class that represents a player.
  */
 public class Player
 {
@@ -8,22 +8,20 @@ public class Player
     char marker;
 
     /**
-     Constructs a chatter with a name.
+     Constructs a player with a name and X/O marker.
+     @param aName the name of the player
+     @param xo the marker of the player (X or O)
      */
     public Player(String aName, char xo)
     {
         name = aName;
         marker = xo;
     }
-    /**
-     Returns the name
-     @return the name
-     */
+
     public String getName()
     {
         return name;
     }
-
     public char getMarker(){
         return marker;
     }

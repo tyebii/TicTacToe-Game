@@ -11,25 +11,6 @@ import java.util.Map;
  A server that handles connecting clients to game instances.
  It can host multiple games, and accept simultaneous connections for up to two clients per game.
  */
-//public class GameServer
-//{
-//    public static void main(String[] args) throws IOException
-//    {
-//        TicTacToeGame game = new TicTacToeGame();
-//        final int PORT = 8888;
-//        ServerSocket server = new ServerSocket(PORT);
-//        System.out.println("Waiting for players to connect...");
-//        Socket s;
-//        while (true)
-//        {
-//            s = server.accept();
-//            GameService service = new GameService(s, game);
-//            Thread t = new Thread(service);
-//            t.start();
-//        }
-//    }
-//}
-
 public class GameServer {
     private static final int PORT = 8888;
     private static final Map<String, TicTacToeGame> gamesList = new HashMap<>();
@@ -59,9 +40,9 @@ public class GameServer {
                 game = gamesList.computeIfAbsent(gameID, k -> new TicTacToeGame(gameID));
             }
 
-            // Start chat service for this client in that room
+            // Start service for this client in that room
             GameService service = new GameService(socket, game);
-            service.run(); // or new Thread(service).start() if ChatService implements Runnable
+            service.run();
 
         } catch (IOException e) {
             e.printStackTrace();

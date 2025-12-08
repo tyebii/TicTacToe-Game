@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.io.PrintWriter;
 
+/**
+ The logic behind the tic tac toe game.
+ Handles displaying the board, registering and de-registering players,
+ processing moves, and determining game state.
+ */
 public class TicTacToeGame
 {
     private ArrayList<GameService> activeService;
@@ -23,7 +28,8 @@ public class TicTacToeGame
     }
 
     /**
-     Constructs a tictactoe game.
+     Constructs a tictactoe game instance.
+     @param id used by players to connect to a specific game
      */
     public TicTacToeGame(String id)
     {
@@ -36,6 +42,9 @@ public class TicTacToeGame
         else { lastMove = 'O'; }
     }
 
+    /**
+     Resets the game board to empty (blank characters)
+     */
     public void resetGame(){
         for (int i=0; i<gameBoard.length;i++) {
             for (int j=0; j<gameBoard[0].length;j++){
@@ -47,38 +56,12 @@ public class TicTacToeGame
         else { lastMove = 'O'; }
     }
 
+
+
     /**
-     Register a player.
-     @param aName the name to register
+     Helper method to check if the player's name is valid
+     @return codes for name taken or game full if not successful
      */
-//    public boolean register(String aName)
-//    {
-//        if (playerHash.isEmpty()) {
-//            playerHash.put(aName, new Player(aName, 'X'));
-//        } else {
-//            if (playerHash.containsKey(aName)) {
-//                return false;
-//            }
-//            playerHash.put(aName, new Player(aName, 'O'));
-//        }
-//        return true;
-//    }
-
-    public ReturnCode register(String aName){
-
-        if (player1 != null && aName.equalsIgnoreCase(player1.getName()) || player2 != null && aName.equalsIgnoreCase(player2.getName())) {
-            return ReturnCode.NAME_TAKEN;
-        }
-        if (player1 == null) {
-            player1 = new Player(aName, 'X');
-            return ReturnCode.SUCCESS;
-        } else if (player2 == null) {
-            player2 = new Player(aName, 'O');
-            return ReturnCode.SUCCESS;
-        }
-        return ReturnCode.GAME_FULL;
-    }
-
     public ReturnCode checkName(String aName) {
         if (player1 != null && aName.equalsIgnoreCase(player1.getName()) || player2 != null && aName.equalsIgnoreCase(player2.getName())) {
             return ReturnCode.NAME_TAKEN;
@@ -89,6 +72,11 @@ public class TicTacToeGame
         return ReturnCode.SUCCESS;
     }
 
+    /**
+     Method to register a player.
+     @param aName the name of the player to register
+     @return the player object containing their name and marker
+     */
     public Player registerP(String aName){
 
         if (player1 == null) {
@@ -102,17 +90,10 @@ public class TicTacToeGame
     }
 
     /**
-     De-register a player.
-     @param aName the name to de-register
+     De-registers a player. Method is called automatically upon both
+     manual quit and force quit.
+     @param aPlayer the player to de-register
      */
-    public void leave(String aName)
-    {
-        if (aName.equals(player1.getName())) {
-            player1 = null;
-        } else if (aName.equals(player2.getName())) {
-            player2 = null;
-        }
-    }
     public void leave(Player aPlayer)
     {
         if (aPlayer == player1) {
@@ -121,12 +102,14 @@ public class TicTacToeGame
             player2 = null;
         }
     }
+
     public void add(GameService cs)
     {
         activeService.add(cs);
     }
+
     /**
-     Broadcast a message to everyone in the room.
+     Helper method to broadcast a message to everyone in the game.
      @param msg the message to be broadcast
      */
     public void broadcast(Player requestor, String msg, GameService gameService)
@@ -141,9 +124,10 @@ public class TicTacToeGame
     }
 
     /**
-     Displays the current state of the game.
-     Returns the current layout of the board, whether the game is in a final state or not,
+     Displays the current state of the game to every connected player.
+     Shows the current layout of the board, whether the game is in a final state or not,
      and which player's turn it is.
+     @param gameService service corresponding to each client connection
      */
     public void display(GameService gameService) {
         // text art formatting for the board
@@ -164,13 +148,11 @@ public class TicTacToeGame
         // Check whose turn it is, and if board is in a final state
         String message = sb.toString();
         if (player1!=null && player2!=null){
-
             if (lastMove == player1.getMarker()) {
                 message += "\nIt's " + player2.getName() + "'s turn.";
             } else {
                 message += "\nIt's " + player1.getName() + "'s turn.";
             }
-
             char result = checkGameState();
             if (result == player1.getMarker()) {
                 message += "\n" + player1.getName() + " wins.";
@@ -298,14 +280,5 @@ public class TicTacToeGame
 
     public String getGameID(){
         return gameID;
-    }
-
-    public Player fetchPlayerByName(String name) {
-        if (name.equals(player1.getName())) {
-            return player1;
-        } else if (name.equals(player2.getName())) {
-            return player2;
-        }
-        return null;
     }
 }

@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 /**
- This program tests the chat server.
+ Represents a client connecting to the game.
  */
 public class GameClient
 {

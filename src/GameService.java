@@ -5,8 +5,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 /**
- Executes Simple Chat Room Access Protocol commands
- from a socket.
+ Executes Simple TicTacToeGame commands from a socket.
  */
 public class GameService implements Runnable
 {
@@ -50,9 +49,10 @@ public class GameService implements Runnable
         loggedOut = false;
     }
     /**
-     Executes all commands until the LOGOUT command or the
-     end of input.
+     Executes all commands until the 'quit' command or the
+     end of input (termination of program).
      Upon join, lists the ID of the game client is currently connected to.
+     Upon quit/termination, de-registers the player from the game.
      */
     public void run()
     {
@@ -116,13 +116,6 @@ public class GameService implements Runnable
                 }
             }
             String temp_name = in.next();
-//            switch(gameInstance.register(temp_name)){
-//                case NAME_TAKEN:
-//                    return "SYSTEM: Username " + temp_name + " has already been taken.";
-//                case GAME_FULL:
-//                    return "SYSTEM: Game is currently full.";
-//            }
-//            userName = temp_name;
             switch(gameInstance.checkName(temp_name)){
                 case NAME_TAKEN:
                     return "SYSTEM: Username " + temp_name + " has already been taken.";
@@ -170,12 +163,11 @@ public class GameService implements Runnable
         return "SYSTEM: Invalid command";
     }
     /**
-     Returns the user name of this service.
-     @return the user name of this service
+     Returns the player represented by this service.
+     @return the player object of this service
      */
     public Player getPlayer()
     {
         return player;
-        //return player.getName();
     }
 }
