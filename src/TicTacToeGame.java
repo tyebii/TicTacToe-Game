@@ -10,7 +10,7 @@ public class TicTacToeGame
     private ArrayList<GameService> activeService;
     private int capacity = 2;
     private HashMap<String, Player> playerHash;
-
+    private String gameID;
     private char[][] gameBoard;
     private char lastMove;
     private Player player1;
@@ -25,12 +25,12 @@ public class TicTacToeGame
     /**
      Constructs a tictactoe game.
      */
-    public TicTacToeGame()
+    public TicTacToeGame(String id)
     {
         playerHash = new HashMap<String, Player>(capacity);
         activeService = new ArrayList<GameService>(capacity);
         gameBoard = new char[3][3];
-
+        gameID = id;
         // crude 50/50 to determine first move
         if ((int) (Math.random()*10+1) > 5) { lastMove = 'X'; }
         else { lastMove = 'O'; }
@@ -294,6 +294,10 @@ public class TicTacToeGame
         lastMove = currPlayer.getMarker();
         display(gs);
         return "Marked " + currPlayer.getMarker() + ".";
+    }
+
+    public String getGameID(){
+        return gameID;
     }
 
     public Player fetchPlayerByName(String name) {

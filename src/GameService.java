@@ -52,6 +52,7 @@ public class GameService implements Runnable
     /**
      Executes all commands until the LOGOUT command or the
      end of input.
+     Upon join, lists the ID of the game client is currently connected to.
      */
     public void run()
     {
@@ -63,6 +64,8 @@ public class GameService implements Runnable
                 OutputStream outStream = s.getOutputStream();
                 in = new Scanner(inStream);
                 out = new PrintWriter(outStream);
+                out.println("Joined '" + gameInstance.getGameID() + "'");
+                out.flush();
                 while (!loggedOut && in.hasNext())
                 {
                     String command = in.next();
