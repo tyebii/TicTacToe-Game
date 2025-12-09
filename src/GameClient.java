@@ -15,10 +15,6 @@ public class GameClient
         final int PORT = 8888;
         final String HOST = "localhost";
         System.out.println("Welcome to TicTacToe!\n");
-        System.out.println("Register a username to start playing.");
-        System.out.println("Usage: register {username}");
-        System.out.println("Type help to list available commands.");
-        System.out.println("Press ENTER key to send your message.\n");
         Socket s = new Socket(HOST, PORT);
         InputStream inStream = s.getInputStream();
         OutputStream outStream = s.getOutputStream();
