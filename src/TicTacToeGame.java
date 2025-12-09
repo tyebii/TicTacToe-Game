@@ -14,7 +14,6 @@ public class TicTacToeGame
 {
     private ArrayList<GameService> activeService;
     private int capacity = 2;
-    private HashMap<String, Player> playerHash;
     private String gameID;
     private char[][] gameBoard;
     private char lastMove;
@@ -33,7 +32,6 @@ public class TicTacToeGame
      */
     public TicTacToeGame(String id)
     {
-        playerHash = new HashMap<String, Player>(capacity);
         activeService = new ArrayList<GameService>(capacity);
         gameBoard = new char[3][3];
         gameID = id;
@@ -55,8 +53,6 @@ public class TicTacToeGame
         if ((int) (Math.random()*10+1) > 5) { lastMove = 'X'; }
         else { lastMove = 'O'; }
     }
-
-
 
     /**
      Helper method to check if the player's name is valid
