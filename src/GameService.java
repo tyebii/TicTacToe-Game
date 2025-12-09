@@ -20,7 +20,7 @@ public class GameService implements Runnable
 
     private static final String HELP_MSG = "List of commands:" +
             "\n register {username} - Registers current player as {username}. Name must be no longer than 15 characters." +
-            "\n refresh - Displays the current state of the game." +
+            "\n display - Displays the current state of the game." +
             "\n restart - Restarts the game." +
             "\n quit - Disconnects user from the game." +
             "\n move {input} - Places an X or O at the location of {input}. format for {input} is as follows:" +
